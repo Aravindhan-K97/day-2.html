@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <title> Day-2 </title>
+    </head>
+<body>
+<h1>Objects and Their Internal Representation in JavaScript</h1>
+<p>
+    JavaScript is a versatile and dynamic programming language widely used for web development. One of its fundamental concepts is the object. Understanding objects and their internal representation is crucial for writing efficient and maintainable code. In this blog, we'll delve into what objects are, how they work, and how JavaScript internally represents them.
+</p>
+<h2>What are Objects in JavaScript?</h2>
+<p>
+    In JavaScript, objects are collections of key-value pairs. They allow you to group related data and functionalities, making it easier to manage and manipulate complex data structures. Objects can represent real-world entities, configurations, or any other structured data.
+</p>
+Here's a simple example of an object in JavaScript
+<p><br>const person = {</br>
+<br>name: "John Doe",</br>
+<br>age: 30,</br>
+<br>profession: "Software Developer",</br>
+<br>greet: function() {</br>
+<br> console.log("Hello, my name is " + this.name);</br>
+<br> }</br>
+<br>};</br></p>
+In this example,<b> person</b> is an object with properties <b>name, age, profession,</b> and a method <b> greet</b>.
+<h2>Internal Representation of Objects</h2>
+<p>Internally, JavaScript engines use various techniques to represent and optimize objects.
+Understanding these internal representations can help you write more efficient code.</p>
+<h3>Property Storage:</h3>
+<p>Properties in JavaScript objects are stored in hash tables or hidden classes, depending on the engine's optimization strategy.</p>
+<br><b>Hash Tables</b>: In simple cases, objects are stored as hash tables where keys are hashed to find their corresponding values quickly.</br>
+<br><b>Hidden Classes</b>: To optimize property access, JavaScript engines like V8 (used in Chrome and Node.js) use hidden classes (or shapes). These are internal representations that group objects with the same structure, allowing faster property access.</br>
+<h3>Property Attributes:</h3>
+<p>Each property in an object has associated attributes that define its behavior. These attributes include:</p>
+<br><b>Writable</b>: Determines if the property value can be changed.</br>
+<br><b>Enumerable</b>: Controls if the property appears in for...in loops.</br>
+<br><b>Configurable</b>: Indicates if the property can be deleted or modified.</br>
+<br><b>Value</b>: The actual value of the property.</br>
+<p>These attributes can be defined using the Object.defineProperty method:</p>
+<br>Object.defineProperty(person, 'name', {</br>
+<br> value: 'John Doe',</br>
+<br>writable: false,</br>
+<br>enumerable: true,</br>
+<br>configurable: false</br>
+<br>});</br>
+<h3>Prototype Chain:</h3>
+<p>Every JavaScript object has an internal link to another object called its prototype. This forms a chain known as the prototype chain, which is used for inheritance. When a property or method is accessed, JavaScript first looks for it on the object itself. If not found, it traverses up the prototype chain until it finds the property or reaches the end of the chain.</p>
+<br>const employee = Object.create(person);</br>
+<br>employee.id = 12345;</br>
+<p>In this example, employee inherits properties and methods from person through the prototype chain.</p>
+<h2>Performance Considerations</h2>
+<p>Understanding the internal representation of objects can help you optimize your code for better performance:</p>
+br><b>Property Access Patterns</b>: Try to avoid adding or removing properties frequently, as this can cause the engine to deoptimize the object.</br>
+<br><b>Consistent Structure</b>: Maintain a consistent structure for objects to allow the engine to optimize them using hidden classes.</br>
+<br><b>Avoid Excessive Prototypes</b>:While prototypes are powerful, excessive use of deep prototype chains can impact performance due to the overhead of property lookups.</br>
+<br><b>Use Built-in Methods</b>:Leverage JavaScript's built-in methods like<b> Object.keys</b>,<b> Object.values</b>, and<b> Object.entries</b> for efficient property manipulation.</br>
+<h2>Conclusion</h2>
+<p>Objects are a core feature of JavaScript, providing a flexible way to organize and manipulate data. By understanding their internal representation, including property storage, attributes, and the prototype chain, you can write more efficient and effective JavaScript code. Keep these insights in mind to harness the full power of objects in your projects, ensuring your applications run smoothly and efficiently.</p>
+<h1>Difference Between document and window Objects in JavaScript</h1>
+<p>In JavaScript, document and window are two fundamental objects that play crucial roles in web development. While they are often used together, they serve distinct purposes and have different scopes and functionalities. Understanding the differences between these objects is essential for effective DOM manipulation and browser interaction.</p>
+<h2>The window Object</h2>
+<p>The window object is the global object in the browser environment. It represents the browser window or a frame that contains a DOM document. All global JavaScript objects, functions, and variables automatically become members of the window object.</p>
+<h3>Key Characteristics of the window Object:</h3>
+<p><b>Global Scope</b>: Variables and functions declared globally become properties and methods of the <b>window</b> object.</p>
+<br>var globalVar = 'I am global';</br>
+<br>console.log(window.globalVar); // 'I am global'</br>
+<p><b>Browser Interaction</b>: The <b>window</b> object provides methods to control the browser window, such as opening new windows or tabs, resizing, scrolling, and managing cookies.</p>
+<br>window.open('https://www.example.com');</br>
+<br>window.resizeTo(800, 600);</br>
+<p>Event Handling: It handles global events like load, resize, and scroll.</p>
+<br>window.addEventListener('load', function() {</br>
+<br>console.log('Window loaded');</br>
+<br>});</br>
+<p><b>Properties and Methods</b>: The<b> window</b> object has numerous properties and methods, including:</p>
+<br><b>window.location</b>: Provides information about the current URL and allows you to navigate to a new URL.</br>
+<br><b>window.history</b>: Allows manipulation of the browser's session history.</br>
+<br><b>window.localStorage</b> and<b> window.sessionStorage</b>: Provide storage mechanisms for key-value pairs.</br>
+<h2>The document Object</h2>
+<p>The <b> document</b> object is a property of the window object. It represents the DOM (Document Object Model) and provides a way to access and manipulate the content of the web page.</p>
+<h3>Key Characteristics of the document Object:</h3>
+<p><b>DOM Manipulation</b>: The document object provides methods to create, modify, and delete HTML elements and their attributes.</p>
+<br>var element = document.createElement('div');</br>
+<br>document.body.appendChild(element);</br>
+<p><b>Element Selection</b>: It offers various methods to select elements, such as<b> getElementById</b>,<b> getElementsByClassName</b>,<b> querySelector</b>, and<b> querySelectorAll</b>.</p>
+<br>var header = document.getElementById('header');</br>
+<br>var items = document.querySelectorAll('.item');</br>
+<p><b>Event Handling</b>: You can attach event listeners to elements in the DOM.</p>
+<br>document.getElementById('button').addEventListener('click', function() {</br>
+<br> alert('Button clicked');</br>
+<br>});</br>
+<p><b>Content Access and Modification</b>: The document object allows you to get or set the content of elements.</p>
+<br>var title = document.title; // Get the page title</br>
+<br>document.title = 'New Title'; // Set the page title</br>
+<h2>Summary of Differences</h2>
+<h3>Scope</h3>
+<p><b>window</b></p>
+<p>Global object representing the browser window</p>
+<p><b>	document</b></p>
+<p>Represents the DOM and web page content</p>
+<h3>Primary Use</h3>
+<p><b>window</b></p>
+<p>Browser control and global event handling</p>
+<p><b>	document</b></p>
+<P>DOM manipulation and content management</P>
+<h3>Event Handling</h3>
+<p><b>window</b></p>
+<p>Global events like load, resize</p>
+<p><b>	document</b></p>
+<p>Events on specific DOM elements</p>
+<h3>Element Interaction</h3>
+<p><b>window</b></p>
+<p>No direct interaction with HTML elements</p>
+<p><b>	document</b></p>
+<p>Direct interaction with HTML elements</p>
+<h3>Element Interaction</h3>
+<p><b>window</b></p>
+<p><b>window.open, window.location, window.history</b></p>
+<p><b>	document</b></p>
+<p><b>	getElementById, createElement, querySelector</b></p>
+<h2>Conclusion</h2>
+<p>Understanding the roles and capabilities of the window and document objects is fundamental for effective JavaScript programming in the browser. The window object provides an interface to interact with the browser window and manage global functions and events, while the document object is specifically designed to interact with and manipulate the content of the web page. By leveraging the strengths of both objects, you can create dynamic, responsive, and interactive web applications.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
